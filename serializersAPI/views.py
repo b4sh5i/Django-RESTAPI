@@ -1,12 +1,19 @@
-from rest_framework import viewsets
-from .serializers import NodeSerializer
-from .models import Node
-from rest_framework import permissions
+from django.contrib.auth import views
+from django.views.generic.detail import SingleObjectMixin
+from django.shortcuts import render, get_object_or_404
+
+from rest_framework import viewsets, status, generics
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from .models import Post
+from .serializers import PostSerializer
 
 # Create your views here.
-class NodeView(viewsets.ModelViewSet):
-    queryset = Node.objects.all()
-    serializer_class = NodeSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+class PostListCreateView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

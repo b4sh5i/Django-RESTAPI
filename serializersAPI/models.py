@@ -1,12 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
-class Node(models.Model):
-    idx = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '[{}] {}'.format(self.idx, self.title)
+class Post(models.Model):
+    idx = models.IntegerField(verbose_name='인덱스')
+    head = models.CharField(max_length=255, verbose_name='제목')
+    content = models.TextField(verbose_name='내용')
